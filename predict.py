@@ -1,8 +1,11 @@
 """Predict labels for a CSV using a trained STAI SVM model.
 
 Usage:
-    python predict.py --model models/model.pkl \
-        --in datasets/some_input.csv --out pred.csv
+    # explicit output path
+    python predict.py --model models/model.pkl --in input.csv --out outputs/result.csv
+
+    # default output (outputs/<input_basename>_pred.csv)
+    python predict.py --model models/model.pkl --in input.csv
 """
 
 from __future__ import annotations
@@ -23,8 +26,16 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--model", required=True, help="pickled model from train.py")
     p.add_argument("--in", dest="input", required=True, help="input CSV (must have 6 feature columns)")
-    p.add_argument("--out", required=True, help="output CSV")
-    return p.parse_args()
+    p.add_argument(
+        "--out",
+        default=None,
+        help="output CSV (default: outputs/<input_basename>_pred.csv)",
+    )
+    args = p.parse_args()
+    if args.out is None:
+        stem = Path(args.input).stem
+        args.out = str(Path("outputs") / f"{stem}_pred.csv")
+    return args
 
 
 def main() -> None:

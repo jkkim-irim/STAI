@@ -165,19 +165,42 @@ seed                                          w (linear 만)
 
 ---
 
-## 작업 체크리스트
+## 작업 체크리스트 (모두 완료)
 
-- [x] 데이터 로딩 / 전처리 (스케일링, 라벨 인코딩, train/val 분할) 모듈 → `src/data.py`
-- [x] 선형 SVM (hard-margin) 구현 + 검증 → `LinearHardMarginSVM` (cvxopt 듀얼 QP, C=1e6)
-- [x] 소프트 마진 SVM (C 하이퍼파라미터) 구현 + 검증 → `SoftMarginSVM`
-- [x] 비선형 커널 SVM (RBF / poly) 구현 + 검증 → `KernelSVM`
-- [x] 다중 클래스 전략 결정 및 구현 → One-vs-Rest (`MultiClassOvR`, `class_weight='balanced'`)
-- [x] 학습 스크립트 → `train.py` (variant flag, pickle 저장)
-- [x] 예측 스크립트 → `predict.py` (모델 + CSV → CSV with `Defect_Type_Pred`)
-- [x] 하이퍼파라미터 스윕 → `scripts/sweep.py` + `dvcc/03_sweep_2026-04-29.md`
-- [ ] full-data 최종 학습 + train/val 정확도 측정
-- [ ] 변형별 비교 결과 정리 → `dvcc/04_results_*.md`
-- [ ] 산출물 정리 (제출 준비)
+- [x] 데이터 로딩 / 전처리 (스케일링, 라벨 인코딩, stratified split) → `src/data.py`
+- [x] 선형 SVM (hard-margin) 구현 → `LinearHardMarginSVM` (cvxopt 듀얼 QP, C=1e6)
+- [x] 소프트 마진 SVM 구현 → `SoftMarginSVM`
+- [x] 비선형 커널 SVM (RBF / poly) 구현 → `KernelSVM`
+- [x] 다중 클래스 전략 — One-vs-Rest 와 One-vs-One 둘 다 구현
+- [x] 학습 스크립트 → `train.py` (variant + multiclass flag, pickle 저장)
+- [x] 예측 스크립트 → `predict.py` (`--in` CSV → `outputs/<basename>_pred.csv` 자동 저장)
+- [x] 하이퍼파라미터 스윕 (1차 단일 val + 2차 5-fold CV) → `scripts/sweep*.py` + `03_sweep_2026-04-29.md`
+- [x] 4 변형 × 2 multiclass = 8 모델 학습 (full data) → `models/*_ovo.pkl`
+- [x] 변형별 비교 + OvR vs OvO 분석 → `04_results_2026-04-29.md`
+- [x] 시각화 13 PNG 생성 → `figures/`
+- [x] 200 행 stratified 샘플 + 4 모델 데모 예측 → `outputs_examples/`
+- [x] 최종 보고서 작성 → `jkkim_final_report_2026-04-29.md` (리포 루트)
+
+---
+
+## 디렉터리 구조 (제출용 최종)
+
+```
+STAI/
+├── jkkim_final_report_2026-04-29.md   ← 최종 보고서
+├── README.md
+├── train.py / predict.py / environment.yml
+├── src/                                코드 (svm.py, data.py)
+├── scripts/                            sweep + plot
+├── datasets/ev_battery_qc_train.csv    제공 데이터
+├── models/                             4 OvO 모델 (.pkl)
+├── figures/                            13 PNG (4 카테고리)
+├── run_logs/                           학습 로그 (8 .log)
+├── outputs/                            predict.py 기본 저장 위치
+├── outputs_examples/                   200-샘플 demo 예측
+├── docs/                               과제 원문 + 강의자료
+└── dvcc/                               단계별 작업 기록 (00~04)
+```
 
 ---
 
@@ -185,5 +208,7 @@ seed                                          w (linear 만)
 
 | 날짜 | 변경 내용 |
 | --- | --- |
-| 2026-04-29 | STAI(SVM 자체 구현) 프로젝트용으로 개요 문서 재작성 |
-| 2026-04-29 | Phase 0\~3 완료 (env+git, data pipeline, SVM core, CLI, sweep). 스윕 베스트: poly C=10 d=4 (val_f1=0.8373) |
+| 2026-04-29 | STAI 프로젝트 개요 작성 — SVM 자체 구현 |
+| 2026-04-29 | Phase 0\~3 완료 (env+git, data pipeline, SVM core, CLI, sweep) |
+| 2026-04-29 | Phase 4\~5 완료 (full-data 4 변형 학습, OvR/OvO 비교) |
+| 2026-04-29 | 시각화 + 데모 예측 생성, 최종 보고서 작성 후 제출 준비 완료 |

@@ -6,16 +6,6 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
-# Models / outputs / training logs
-models/
-runs/
-*.npz
-*.pkl
-*.joblib
-output/
-pred*.csv
-!datasets/**/pred*.csv
-
 # IDE / OS
 .vscode/
 .idea/

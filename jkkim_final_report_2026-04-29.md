@@ -18,9 +18,9 @@ EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지
 
 피처 6 개: `Ambient_Temp_C`, `Anode_Overhang_mm`, `Electrolyte_Volume_ml`, `Internal_Resistance_mOhm`, `Capacity_mAh`, `Retention_50Cycle_Pct`.
 
-![class distribution](../figures/data_overview/class_distribution.png)
+![class distribution](figures/data_overview/class_distribution.png)
 
-> **그림 1.** 13,565 셀의 클래스 분포. **극심한 불균형** — None 82.6% / Critical 0.6%. 단순 정확도 만으로 평가하면 "전부 None 찍기" 도 82% 가 나오므로, **macro F1 score (mF1, 클래스 동등 가중)** 도 함께 평가.
+> **그림 1.** 13,565 셀의 클래스 분포. **극심한 불균형** — None 82.6% / Critical 0.6%. 단순 정확도만으로 평가하면 "전부 None 찍기" 도 82% 가 나오므로 **macro F1 score (mF1, 클래스 동등 가중)** 도 함께 평가.
 
 ---
 
@@ -44,7 +44,7 @@ EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지
 
 ## 3. 알고리즘별 결정경계 (직관적 비교)
 
-![decision boundaries](../figures/decision_boundary/all_4_compare.png)
+![decision boundaries](figures/decision_boundary/all_4_compare.png)
 
 > **그림 2.** PCA 2D 공간에서 4 OvO 모델의 결정 경계 (시각화 목적의 mini-SVM, 실제 학습은 6D).
 > - **Linear**: 직선 결합으로 영역 분할
@@ -58,7 +58,7 @@ EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지
 
 ## 4. 결과 — 단순 모델이 최고
 
-![accuracy and macro f1](../figures/performance/accuracy_macro_f1.png)
+![accuracy and macro f1](figures/performance/accuracy_macro_f1.png)
 
 > **그림 3.** 4 OvO 모델의 val 정확도 (파랑) + macro F1 (주황).
 
@@ -71,7 +71,7 @@ EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지
 
 → **가장 단순한 Linear hard-margin + OvO 가 정확도 1 위**. 비선형 커널은 이 데이터에 추가 가치 없음 (결정경계가 거의 선형).
 
-![per-class F1 heatmap](../figures/performance/per_class_f1_heatmap.png)
+![per-class F1 heatmap](figures/performance/per_class_f1_heatmap.png)
 
 > **그림 4.** 4 모델 × 4 클래스의 per-class F1 score 히트맵. 색깔 진할수록 잘 잡음. **Poor Retention** 이 모든 모델의 약점 (F1 0.31~0.55) — 6 피처로 None 과 분리 어려움.
 
@@ -79,7 +79,7 @@ EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지
 
 ## 5. 베스트 모델 confusion matrix
 
-![confusion matrix best](../figures/performance/confusion_matrix_best.png)
+![confusion matrix best](figures/performance/confusion_matrix_best.png)
 
 > **그림 5.** **Linear hard + OvO** 의 val 혼동행렬 (행=실제, 열=예측). Critical 16/16 (100%), High IR 385/385 (100%), None 2164/2241 (96.6%), Poor Ret 44/71 (62%).
 
@@ -97,11 +97,17 @@ EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지
 ### 사용법 — `predict.py` 한 줄
 
 ```bash
+# --out 생략 시 자동으로 outputs/<입력파일명>_pred.csv 에 저장
+python predict.py --model models/linear_hard_ovo.pkl --in 입력CSV.csv
+
+# --out 명시도 가능
 python predict.py --model models/linear_hard_ovo.pkl \
-    --in 입력CSV.csv --out 예측결과.csv
+    --in 입력CSV.csv --out outputs/result.csv
 ```
 
 입력 CSV 에 위 6 피처 컬럼만 정확히 있으면 동작. 출력 CSV 는 입력 + `Defect_Type_Pred` 열 추가.
+
+**예시 출력**: [`outputs_examples/`](outputs_examples/) 폴더에 200 행 stratified 샘플 + 4 모델 예측 결과 첨부.
 
 ---
 
@@ -118,7 +124,9 @@ python predict.py --model models/linear_hard_ovo.pkl \
 **약어**: SVM (Support Vector Machine), OvR/OvO (1대c-1 / 1대1), mF1 (macro F1), SV (Support Vector), CV (Cross-Validation), PCA (Principal Component Analysis), C / γ (gamma) / degree = 하이퍼파라미터.
 
 **산출물**:
-- 코드: [`src/svm.py`](../src/svm.py), [`train.py`](../train.py), [`predict.py`](../predict.py)
-- 그림: [`figures/`](../figures/) (13 PNG, 4 카테고리)
-- 단계별 기록: [`dvcc/00`](00_overview.md) ~ [`04`](04_results_2026-04-29.md)
-- 강의자료 식 ↔ 코드 1:1 매핑: [`04_results.md`](04_results_2026-04-29.md) 부록 참조
+- 코드: [`src/svm.py`](src/svm.py), [`train.py`](train.py), [`predict.py`](predict.py)
+- 그림: [`figures/`](figures/) (13 PNG, 4 카테고리)
+- 학습 로그: [`run_logs/`](run_logs/)
+- 예측 예시: [`outputs_examples/`](outputs_examples/) (입력 200 행 + 4 모델 결과)
+- 단계별 작업 기록: [`dvcc/`](dvcc/)
+- 강의자료 식 ↔ 코드 1:1 매핑: [`dvcc/04_results_2026-04-29.md`](dvcc/04_results_2026-04-29.md) 부록 D
