@@ -16,6 +16,12 @@ from pathlib import Path
 
 import numpy as np
 
+# Force line-buffered stdout/stderr so that cvxopt's QP iter table (which
+# uses bare print()) streams in real time instead of batching when piped
+# through `tee` or redirected to a file.
+sys.stdout.reconfigure(line_buffering=True)
+sys.stderr.reconfigure(line_buffering=True)
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from src.data import (  # noqa: E402
     FEATURE_COLUMNS,

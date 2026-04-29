@@ -19,6 +19,9 @@ from pathlib import Path
 
 import numpy as np
 
+sys.stdout.reconfigure(line_buffering=True)
+sys.stderr.reconfigure(line_buffering=True)
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.data import LabelEncoder, StandardScaler, load_csv  # noqa: E402
 from src.svm import (  # noqa: E402
