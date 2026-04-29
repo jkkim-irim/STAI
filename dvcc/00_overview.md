@@ -59,15 +59,17 @@ EV 배터리 셀의 정량 측정값으로부터 결함 유형(`Defect_Type`)을
 
 ## 작업 체크리스트
 
-- [ ] 데이터 로딩 / 전처리 (스케일링, 라벨 인코딩, train/val 분할) 모듈
-- [ ] 선형 SVM (hard-margin) 구현 + 검증
-- [ ] 소프트 마진 SVM (C 하이퍼파라미터) 구현 + 검증
-- [ ] 비선형 커널 SVM (RBF / poly) 구현 + 검증
-- [ ] 다중 클래스 전략 (One-vs-Rest 또는 One-vs-One) 결정 및 구현
-- [ ] 학습 스크립트 (`train.py` 등) — CSV → 모델 파일 저장
-- [ ] 예측 스크립트 (`predict.py` 등) — 모델 + CSV → 예측 CSV 저장
-- [ ] 학습 데이터 정확도 측정 / 보고
-- [ ] 산출물 정리 (코드 + 모델 + 결과 CSV + 짧은 설명)
+- [x] 데이터 로딩 / 전처리 (스케일링, 라벨 인코딩, train/val 분할) 모듈 → `src/data.py`
+- [x] 선형 SVM (hard-margin) 구현 + 검증 → `LinearHardMarginSVM` (cvxopt 듀얼 QP, C=1e6)
+- [x] 소프트 마진 SVM (C 하이퍼파라미터) 구현 + 검증 → `SoftMarginSVM`
+- [x] 비선형 커널 SVM (RBF / poly) 구현 + 검증 → `KernelSVM`
+- [x] 다중 클래스 전략 결정 및 구현 → One-vs-Rest (`MultiClassOvR`, `class_weight='balanced'`)
+- [x] 학습 스크립트 → `train.py` (variant flag, pickle 저장)
+- [x] 예측 스크립트 → `predict.py` (모델 + CSV → CSV with `Defect_Type_Pred`)
+- [x] 하이퍼파라미터 스윕 → `scripts/sweep.py` + `dvcc/03_sweep_2026-04-29.md`
+- [ ] full-data 최종 학습 + train/val 정확도 측정
+- [ ] 변형별 비교 결과 정리 → `dvcc/04_results_*.md`
+- [ ] 산출물 정리 (제출 준비)
 
 ---
 
@@ -76,3 +78,4 @@ EV 배터리 셀의 정량 측정값으로부터 결함 유형(`Defect_Type`)을
 | 날짜 | 변경 내용 |
 | --- | --- |
 | 2026-04-29 | STAI(SVM 자체 구현) 프로젝트용으로 개요 문서 재작성 |
+| 2026-04-29 | Phase 0\~3 완료 (env+git, data pipeline, SVM core, CLI, sweep). 스윕 베스트: poly C=10 d=4 (val_f1=0.8373) |

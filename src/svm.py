@@ -249,11 +249,16 @@ class _BaseSVM:
 # ---------------------------------------------------------------------------
 
 class LinearHardMarginSVM(_BaseSVM):
-    """Hard-margin linear SVM. Use only when data is (nearly) linearly separable."""
+    """Hard-margin linear SVM. Use only when data is (nearly) linearly separable.
+
+    Implementation note: we use a large but finite C (1e6) instead of literal +∞.
+    With C=∞ the dual upper bound becomes degenerate and cvxopt's interior-point
+    solver gets ill-conditioned (extremely slow on large n). 1e6 is large enough
+    that any slack is essentially forbidden in practice but keeps the QP well-posed.
+    """
 
     def __init__(self, tol: float = 1e-5, ridge: float = 1e-8) -> None:
-        # large C ≡ no slack; not infinite to keep QP numerically stable
-        super().__init__(C=1e8, kernel="linear", tol=tol, ridge=ridge)
+        super().__init__(C=1e6, kernel="linear", tol=tol, ridge=ridge)
 
 
 class SoftMarginSVM(_BaseSVM):
