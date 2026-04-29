@@ -1,6 +1,6 @@
 # STAI 중간 프로젝트 최종 보고서
 
-**EV 배터리 결함 분류 — SVM 자체 구현** · 김재경 (jkkim-irim) · 2026-04-29
+**EV 배터리 결함 분류 — SVM 자체 구현** · 김중길 (jkkim-irim) · 2026-04-29
 GitHub: <https://github.com/jkkim-irim/STAI>
 
 ---
@@ -9,10 +9,10 @@ GitHub: <https://github.com/jkkim-irim/STAI>
 
 EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지** 분류.
 
-| 클래스 | 의미 |
-| --- | --- |
-| **None** | 정상 (결함 없음) |
-| **High IR** | High Internal Resistance — 내부 저항 높음 |
+| 클래스          | 의미                                  |
+| ------------ | ----------------------------------- |
+| **None**     | 정상 (결함 없음)                          |
+| **High IR**  | High Internal Resistance — 내부 저항 높음 |
 | **Poor Ret** | Poor Retention — 50 사이클 후 용량 유지율 저하 |
 | **Critical** | Critical Resistance — 심각한 저항 결함, 폐기 |
 
@@ -26,13 +26,14 @@ EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지
 
 ## 2. 구현한 알고리즘 (룰 1 충족)
 
-| 변형 | 한국어 | 코드 |
-| --- | --- | --- |
-| Linear hard-margin | 선형 SVM | `LinearHardMarginSVM` |
-| Soft margin | 선형 분리불가능 SVM | `SoftMarginSVM` |
-| Kernel (RBF, poly) | 비선형 SVM | `KernelSVM` |
+| 변형                 | 한국어          | 코드                    |
+| ------------------ | ------------ | --------------------- |
+| Linear hard-margin | 선형 SVM       | `LinearHardMarginSVM` |
+| Soft margin        | 선형 분리불가능 SVM | `SoftMarginSVM`       |
+| Kernel (RBF, poly) | 비선형 SVM      | `KernelSVM`           |
 
 **다중 클래스 전략 두 가지**:
+
 - **OvR** (One-vs-Rest, 강의 11.4.3 의 1대c-1) — c 개 binary 분류기
 - **OvO** (One-vs-One, 1대1) — c(c-1)/2 = 6 개 binary 분류기
 
@@ -47,11 +48,12 @@ EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지
 ![decision boundaries](figures/decision_boundary/all_4_compare.png)
 
 > **그림 2.** PCA 2D 공간에서 4 OvO 모델의 결정 경계 (시각화 목적의 mini-SVM, 실제 학습은 6D).
+> 
 > - **Linear**: 직선 결합으로 영역 분할
 > - **Soft**: 직선이지만 마진 위반 허용 → 부드러움
 > - **Kernel poly**: 곡선 (3 차 다항식) 결정경계
 > - **Kernel RBF**: 종 모양 / 원형 결정경계
->
+> 
 > **알고리즘별 표현력 차이가 시각적으로 명확**.
 
 ---
@@ -62,12 +64,12 @@ EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지
 
 > **그림 3.** 4 OvO 모델의 val 정확도 (파랑) + macro F1 (주황).
 
-| 모델 | val_acc | val_mF1 |
-| --- | --- | --- |
-| **Linear hard + OvO** | **0.9617** | 0.860 |
-| Kernel poly d=3 C=50 + OvO | 0.9506 | **0.863** |
-| Kernel RBF C=300 γ=0.05 + OvO | 0.9495 | 0.833 |
-| Soft C=100 + OvO | 0.8699 | 0.794 |
+| 모델                            | val_acc    | val_mF1   |
+| ----------------------------- | ---------- | --------- |
+| **Linear hard + OvO**         | **0.9617** | 0.860     |
+| Kernel poly d=3 C=50 + OvO    | 0.9506     | **0.863** |
+| Kernel RBF C=300 γ=0.05 + OvO | 0.9495     | 0.833     |
+| Soft C=100 + OvO              | 0.8699     | 0.794     |
 
 → **가장 단순한 Linear hard-margin + OvO 가 정확도 1 위**. 비선형 커널은 이 데이터에 추가 가치 없음 (결정경계가 거의 선형).
 
@@ -87,12 +89,12 @@ EV 배터리 셀의 **6 가지 측정값** 으로부터 **결함 유형 4 가지
 
 ## 6. 제출 모델 (룰 1 — 변형별 1 개씩)
 
-| 룰 1 요구 | 모델 파일 | val_acc | val_mF1 |
-| --- | --- | --- | --- |
-| **선형 SVM** | `models/linear_hard_ovo.pkl` | **0.9617** | **0.860** |
-| **선형 분리불가능 SVM** | `models/soft_C100_ovo.pkl` | 0.8699 | 0.794 |
-| **비선형 SVM (poly)** | `models/kernel_poly_d3_C50_ovo.pkl` | 0.9506 | 0.863 |
-| **비선형 SVM (RBF)** | `models/kernel_rbf_C300_g005_ovo.pkl` | 0.9495 | 0.833 |
+| 룰 1 요구             | 모델 파일                                 | val_acc    | val_mF1   |
+| ------------------ | ------------------------------------- | ---------- | --------- |
+| **선형 SVM**         | `models/linear_hard_ovo.pkl`          | **0.9617** | **0.860** |
+| **선형 분리불가능 SVM**   | `models/soft_C100_ovo.pkl`            | 0.8699     | 0.794     |
+| **비선형 SVM (poly)** | `models/kernel_poly_d3_C50_ovo.pkl`   | 0.9506     | 0.863     |
+| **비선형 SVM (RBF)**  | `models/kernel_rbf_C300_g005_ovo.pkl` | 0.9495     | 0.833     |
 
 ### 사용법 — `predict.py` 한 줄
 
@@ -124,6 +126,7 @@ python predict.py --model models/linear_hard_ovo.pkl \
 **약어**: SVM (Support Vector Machine), OvR/OvO (1대c-1 / 1대1), mF1 (macro F1), SV (Support Vector), CV (Cross-Validation), PCA (Principal Component Analysis), C / γ (gamma) / degree = 하이퍼파라미터.
 
 **산출물**:
+
 - 코드: [`src/svm.py`](src/svm.py), [`train.py`](train.py), [`predict.py`](predict.py)
 - 그림: [`figures/`](figures/) (13 PNG, 4 카테고리)
 - 학습 로그: [`run_logs/`](run_logs/)
