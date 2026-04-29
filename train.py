@@ -33,6 +33,7 @@ from src.data import (  # noqa: E402
 from src.svm import (  # noqa: E402
     KernelSVM,
     LinearHardMarginSVM,
+    MultiClassOvO,
     MultiClassOvR,
     SoftMarginSVM,
 )
@@ -79,6 +80,13 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="print cvxopt QP iteration table for every binary classifier "
              "(very verbose — useful for debugging or to confirm convergence)",
+    )
+    p.add_argument(
+        "--multiclass",
+        choices=["ovr", "ovo"],
+        default="ovr",
+        help="multi-class strategy: 'ovr' = One-vs-Rest (default, c binaries), "
+             "'ovo' = One-vs-One (c(c-1)/2 binaries, lecture 11.4.3 의 1대1)",
     )
     return p.parse_args()
 
@@ -186,15 +194,20 @@ def main() -> None:
 
     cw = args.class_weight if args.class_weight != "none" else None
     factory = make_factory(args.variant, args)
-    ovr = MultiClassOvR(base_factory=factory, class_weight=cw)
+    if args.multiclass == "ovr":
+        clf = MultiClassOvR(base_factory=factory, class_weight=cw)
+    elif args.multiclass == "ovo":
+        clf = MultiClassOvO(base_factory=factory, class_weight=cw)
+    else:
+        raise ValueError(f"unknown multiclass: {args.multiclass}")
 
     t0 = time.time()
-    ovr.fit(X_tr, y_tr, verbose=True, qp_verbose=args.qp_verbose)
+    clf.fit(X_tr, y_tr, verbose=True, qp_verbose=args.qp_verbose)
     fit_seconds = time.time() - t0
     print_flush(f"  fit done in {fit_seconds:.1f}s")
 
-    pred_tr = ovr.predict(X_tr)
-    pred_va = ovr.predict(X_va)
+    pred_tr = clf.predict(X_tr)
+    pred_va = clf.predict(X_va)
     train_acc = (pred_tr == y_tr).mean()
     val_acc = (pred_va == y_va).mean()
 
@@ -210,7 +223,8 @@ def main() -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     state = {
         "variant": args.variant,
-        "svm": ovr,
+        "multiclass": args.multiclass,
+        "svm": clf,
         "scaler": scaler,
         "encoder": encoder,
         "feature_names": list(FEATURE_COLUMNS),

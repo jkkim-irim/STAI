@@ -426,3 +426,173 @@ class MultiClassOvR:
         n = int(d["n_estimators"])
         m.estimators_ = [base_cls.from_dict(d[f"est_{i}"]) for i in range(n)]
         return m
+
+
+# ---------------------------------------------------------------------------
+# Multi-class via One-vs-One (강의자료 11.4.3 의 1대1 기법)
+# ---------------------------------------------------------------------------
+
+class MultiClassOvO:
+    """One-vs-One wrapper. Trains C(c, 2) = c(c-1)/2 binary SVMs (one per class pair).
+
+    For each pair (i, j) the binary classifier is trained on samples whose
+    label is either class i (positive) or class j (negative); samples of
+    other classes are excluded. At prediction time each binary casts a vote
+    for one of its two classes; the class with the most votes wins.
+
+    Compared to OvR:
+      - More classifiers (6 vs 4 for 4 classes)
+      - Each classifier trains on a subset of data (faster per binary, often
+        smaller total compute)
+      - Each binary problem is naturally more balanced (only two classes)
+      - At inference, irrelevant pairs still vote — small noise
+    """
+
+    def __init__(
+        self,
+        base_factory,
+        class_weight: Literal[None, "balanced"] = "balanced",
+    ) -> None:
+        self.base_factory = base_factory
+        self.class_weight = class_weight
+        self.classes_: np.ndarray | None = None
+        self.pairs_: list[tuple[int, int]] = []
+        self.estimators_: list[_BaseSVM] = []
+
+    def __getstate__(self) -> dict:
+        state = self.__dict__.copy()
+        state["base_factory"] = None
+        return state
+
+    def fit(
+        self,
+        X: np.ndarray,
+        y: np.ndarray,
+        verbose: bool = False,
+        qp_verbose: bool = False,
+    ) -> "MultiClassOvO":
+        from itertools import combinations
+        import time as _time
+
+        X = np.asarray(X, dtype=np.float64)
+        y = np.asarray(y).reshape(-1)
+        self.classes_ = np.unique(y)
+        n_classes = len(self.classes_)
+        self.pairs_ = list(combinations(range(n_classes), 2))
+        self.estimators_ = []
+        K = len(self.pairs_)
+        total_start = _time.time()
+        per_step_times: list[float] = []
+
+        for k, (i, j) in enumerate(self.pairs_):
+            cls_i = self.classes_[i]
+            cls_j = self.classes_[j]
+            mask = (y == cls_i) | (y == cls_j)
+            X_pair = X[mask]
+            y_pair = y[mask]
+            n_i = int((y_pair == cls_i).sum())
+            n_j = int((y_pair == cls_j).sum())
+            y_bin = np.where(y_pair == cls_i, 1.0, -1.0)
+
+            n_total_pair = n_i + n_j
+            if self.class_weight == "balanced":
+                w_pos = n_total_pair / (2.0 * n_i)
+                w_neg = n_total_pair / (2.0 * n_j)
+                w = np.where(y_bin == 1, w_pos, w_neg)
+                wt_str = f"balanced (w_pos={w_pos:.2f}, w_neg={w_neg:.2f})"
+            else:
+                w = None
+                wt_str = "none"
+
+            est = self.base_factory()
+            t0 = _time.time()
+            if verbose:
+                elapsed = _time.time() - total_start
+                if per_step_times:
+                    avg = sum(per_step_times) / len(per_step_times)
+                    eta = avg * (K - k)
+                    eta_str = f", ETA={eta:.0f}s"
+                else:
+                    eta_str = ""
+                print(
+                    f"\n  ┌─ OvO [{k + 1}/{K}] pair=(class {i} vs class {j})\n"
+                    f"  │  n_i={n_i}, n_j={n_j}, total={n_total_pair}, weight={wt_str}\n"
+                    f"  │  elapsed={elapsed:.0f}s{eta_str}\n"
+                    f"  │  cvxopt QP solving... "
+                    f"(silent unless qp_verbose=True)",
+                    flush=True,
+                )
+            est.fit(X_pair, y_bin, sample_weight=w, qp_verbose=qp_verbose)
+            step_t = _time.time() - t0
+            per_step_times.append(step_t)
+            if verbose:
+                n_sv = len(est.alpha_)
+                print(
+                    f"  │  done in {step_t:.1f}s\n"
+                    f"  │  #SV={n_sv}\n"
+                    f"  └─ b={est.b_:+.4f}",
+                    flush=True,
+                )
+            self.estimators_.append(est)
+
+        if verbose:
+            total = _time.time() - total_start
+            print(
+                f"\n  [OvO all done] total fit time = {total:.1f}s "
+                f"(avg {total / K:.1f}s per pair, K={K} pairs)",
+                flush=True,
+            )
+        return self
+
+    def decision_function(self, X: np.ndarray) -> np.ndarray:
+        """Per-class soft scores (sum of margin distances from each binary).
+
+        For pair (i, j), if d > 0 the binary votes for i with confidence |d|;
+        else for j with confidence |d|. Scores accumulate per class.
+        Useful for ensembling with OvR.
+        """
+        X = np.asarray(X, dtype=np.float64)
+        n_classes = len(self.classes_)
+        scores = np.zeros((len(X), n_classes), dtype=np.float64)
+        for (i, j), est in zip(self.pairs_, self.estimators_):
+            d = est.decision_function(X)
+            scores[:, i] += np.where(d > 0, d, 0.0)
+            scores[:, j] += np.where(d < 0, -d, 0.0)
+        return scores
+
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """Hard voting — each binary casts one vote; ties broken by soft scores."""
+        if self.classes_ is None:
+            raise RuntimeError("model not fitted")
+        X = np.asarray(X, dtype=np.float64)
+        n_classes = len(self.classes_)
+        votes = np.zeros((len(X), n_classes), dtype=np.int64)
+        soft = np.zeros((len(X), n_classes), dtype=np.float64)
+        for (i, j), est in zip(self.pairs_, self.estimators_):
+            d = est.decision_function(X)
+            pos = d > 0
+            votes[pos, i] += 1
+            votes[~pos, j] += 1
+            soft[:, i] += np.where(pos, d, 0.0)
+            soft[:, j] += np.where(~pos, -d, 0.0)
+        # tie-break by soft score: combine vote count + small soft contribution
+        combined = votes.astype(np.float64) + 1e-3 * soft
+        idx = np.argmax(combined, axis=1)
+        return self.classes_[idx]
+
+    def to_dict(self) -> dict:
+        return {
+            "classes": np.asarray(self.classes_),
+            "pairs": np.asarray(self.pairs_, dtype=np.int64),
+            "n_estimators": np.int64(len(self.estimators_)),
+            **{f"est_{i}": est.to_dict() for i, est in enumerate(self.estimators_)},
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict, base_cls: type[_BaseSVM]) -> "MultiClassOvO":
+        m = cls(base_factory=base_cls)
+        m.classes_ = np.asarray(d["classes"])
+        m.pairs_ = [tuple(p) for p in d["pairs"]]
+        n = int(d["n_estimators"])
+        m.estimators_ = [base_cls.from_dict(d[f"est_{i}"]) for i in range(n)]
+        return m
