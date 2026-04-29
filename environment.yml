@@ -1,0 +1,16 @@
+name: stai
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - scipy
+  - cvxopt
+  - matplotlib
+  - jupyter
+  - ipykernel
+  - tqdm
+  - pip
+  - pip:
+      - ruff

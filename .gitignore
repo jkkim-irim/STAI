@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+
+# Models / outputs
+models/
+*.npz
+*.pkl
+*.joblib
+output/
+pred*.csv
+!datasets/**/pred*.csv
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Env / secrets
+.env
+.envrc
+.python-version
