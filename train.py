@@ -68,6 +68,12 @@ def parse_args() -> argparse.Namespace:
         default=0,
         help="subsample training set to N rows (stratified); 0 = use all",
     )
+    p.add_argument(
+        "--qp-verbose",
+        action="store_true",
+        help="print cvxopt QP iteration table for every binary classifier "
+             "(very verbose — useful for debugging or to confirm convergence)",
+    )
     return p.parse_args()
 
 
@@ -155,7 +161,10 @@ def main() -> None:
 
     encoder = LabelEncoder().fit(y_str)
     y_int = encoder.transform(y_str)
-    print_flush(f"  classes ({len(encoder.classes_)}): {encoder.classes_.tolist()}")
+    print_flush(f"  classes ({len(encoder.classes_)}):")
+    counts = np.bincount(y_int, minlength=len(encoder.classes_))
+    for ci, (cname, cn) in enumerate(zip(encoder.classes_, counts)):
+        print_flush(f"    [{ci}] {cname:30s}  n={int(cn)}  ({100*cn/len(y_int):.2f}%)")
 
     scaler = StandardScaler().fit(X_raw)
     Xs = scaler.transform(X_raw)
@@ -174,7 +183,7 @@ def main() -> None:
     ovr = MultiClassOvR(base_factory=factory, class_weight=cw)
 
     t0 = time.time()
-    ovr.fit(X_tr, y_tr, verbose=True)
+    ovr.fit(X_tr, y_tr, verbose=True, qp_verbose=args.qp_verbose)
     fit_seconds = time.time() - t0
     print_flush(f"  fit done in {fit_seconds:.1f}s")
 

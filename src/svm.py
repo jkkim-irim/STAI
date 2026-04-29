@@ -117,6 +117,7 @@ class _BaseSVM:
         X: np.ndarray,
         y: np.ndarray,
         sample_weight: np.ndarray | None = None,
+        qp_verbose: bool = False,
     ) -> "_BaseSVM":
         X = np.asarray(X, dtype=np.float64)
         y = np.asarray(y, dtype=np.float64).reshape(-1)
@@ -148,6 +149,9 @@ class _BaseSVM:
         A = y.reshape(1, -1)
         b_eq = np.zeros(1, dtype=np.float64)
 
+        # cvxopt QP iter table (interior-point progress) — useful for confirming
+        # convergence on long fits
+        cvxopt.solvers.options["show_progress"] = bool(qp_verbose)
         sol = cvxopt.solvers.qp(
             cvxopt.matrix(P),
             cvxopt.matrix(q),
@@ -156,6 +160,8 @@ class _BaseSVM:
             cvxopt.matrix(A),
             cvxopt.matrix(b_eq),
         )
+        # restore default
+        cvxopt.solvers.options["show_progress"] = False
         if sol["status"] not in ("optimal", "unknown"):
             raise RuntimeError(f"cvxopt QP failed: status={sol['status']}")
         alpha = np.array(sol["x"]).reshape(-1)
@@ -316,7 +322,11 @@ class MultiClassOvR:
         return state
 
     def fit(
-        self, X: np.ndarray, y: np.ndarray, verbose: bool = False
+        self,
+        X: np.ndarray,
+        y: np.ndarray,
+        verbose: bool = False,
+        qp_verbose: bool = False,
     ) -> "MultiClassOvR":
         X = np.asarray(X, dtype=np.float64)
         y = np.asarray(y).reshape(-1)
@@ -324,29 +334,71 @@ class MultiClassOvR:
         self.estimators_ = []
         n = len(y)
         import time as _time
+        K = len(self.classes_)
+        total_start = _time.time()
+        per_step_times: list[float] = []
         for k, c in enumerate(self.classes_):
             y_bin = np.where(y == c, 1.0, -1.0)
+            n_pos = int((y_bin == 1).sum())
+            n_neg = n - n_pos
             if self.class_weight == "balanced":
-                n_pos = int((y_bin == 1).sum())
-                n_neg = n - n_pos
                 w = np.where(y_bin == 1, n / (2.0 * n_pos), n / (2.0 * n_neg))
+                w_pos = n / (2.0 * n_pos)
+                w_neg = n / (2.0 * n_neg)
+                wt_str = f"balanced (w_pos={w_pos:.2f}, w_neg={w_neg:.3f})"
             else:
                 w = None
+                wt_str = "none"
             est = self.base_factory()
             t0 = _time.time()
             if verbose:
+                elapsed = _time.time() - total_start
+                if per_step_times:
+                    avg = sum(per_step_times) / len(per_step_times)
+                    eta = avg * (K - k)
+                    eta_str = f", ETA={eta:.0f}s"
+                else:
+                    eta_str = ""
                 print(
-                    f"    OvR [{k + 1}/{len(self.classes_)}] fitting class={c} "
-                    f"(n_pos={int((y_bin == 1).sum())}, n_neg={int((y_bin == -1).sum())})...",
+                    f"\n  ┌─ OvR [{k + 1}/{K}] class={c}\n"
+                    f"  │  n_pos={n_pos}, n_neg={n_neg}, weight={wt_str}\n"
+                    f"  │  elapsed={elapsed:.0f}s{eta_str}\n"
+                    f"  │  cvxopt QP solving... "
+                    f"(silent unless qp_verbose=True)",
                     flush=True,
                 )
-            est.fit(X, y_bin, sample_weight=w)
+            est.fit(X, y_bin, sample_weight=w, qp_verbose=qp_verbose)
+            step_t = _time.time() - t0
+            per_step_times.append(step_t)
             if verbose:
+                # decompose SV stats
+                upper = est.C * (w[w > 0].max() if w is not None else 1.0)
+                # margin SVs: 0 < α < upper (loose), bound SVs: α ≈ upper
+                if w is not None:
+                    upper_per_sv = est.C * (w[y_bin == 1][0] if est.support_y_[0] == 1 else w[y_bin == -1][0])
+                else:
+                    upper_per_sv = est.C
+                n_total = len(est.alpha_)
+                # crude bound count: α >= 0.99 * (its sample's upper)
+                # since per-sample upper varies with class_weight, approximate:
+                if w is not None:
+                    upper_each = est.C * np.where(est.support_y_ == 1, w_pos, w_neg)
+                else:
+                    upper_each = np.full(n_total, est.C)
+                n_bound = int(np.sum(est.alpha_ >= upper_each * 0.99))
+                n_margin = n_total - n_bound
                 print(
-                    f"      done in {_time.time() - t0:.1f}s, #SV={len(est.alpha_)}",
+                    f"  │  done in {step_t:.1f}s\n"
+                    f"  │  SVs: total={n_total}  margin (0<α<C)={n_margin}  "
+                    f"bound (α=C, 위반)={n_bound}\n"
+                    f"  └─ b={est.b_:+.4f}",
                     flush=True,
                 )
             self.estimators_.append(est)
+        if verbose:
+            total = _time.time() - total_start
+            print(f"\n  [OvR all done] total fit time = {total:.1f}s "
+                  f"(avg {total / K:.1f}s per class)", flush=True)
         return self
 
     def decision_function(self, X: np.ndarray) -> np.ndarray:
