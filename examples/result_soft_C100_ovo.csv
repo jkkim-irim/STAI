@@ -1,0 +1,201 @@
+Cell_ID,Batch_ID,Production_Line,Shift,Supplier,Ambient_Temp_C,Anode_Overhang_mm,Electrolyte_Volume_ml,Internal_Resistance_mOhm,Capacity_mAh,Retention_50Cycle_Pct,Defect_Type,Defect_Type_Pred
+CELL-016379,BTH-0492,Line_3,Evening,LithioMat,21.87,0.11,14.87,15.09,4987,96.58,High Internal Resistance,High Internal Resistance
+CELL-002395,BTH-0280,Line_1,Morning,ChemCorp,27.16,0.148,14.68,16.54,4753,91.5,Critical Resistance,Critical Resistance
+CELL-014991,BTH-0115,Line_1,Evening,ChemCorp,21.95,0.135,15.17,13.42,4995,94.76,Poor Retention,Poor Retention
+CELL-003371,BTH-0063,Line_3,Morning,LithioMat,26.01,0.147,14.83,13.37,5030,97.64,,None
+CELL-004352,BTH-0064,Line_2,Morning,ChemCorp,27.41,0.157,14.95,14.16,5032,96.99,,None
+CELL-001723,BTH-0288,Line_1,Morning,LithioMat,24.56,0.142,15.06,13.79,4995,96.71,,None
+CELL-016520,BTH-0077,Line_2,Evening,LithioMat,24.54,0.155,15.05,15.17,4960,97.46,High Internal Resistance,High Internal Resistance
+CELL-001885,BTH-0148,Line_3,Morning,ChemCorp,23.87,0.191,15.05,14.43,5017,96.17,,None
+CELL-009950,BTH-0324,Line_3,Morning,ChemCorp,22.66,0.185,15.0,14.16,5055,97.04,,None
+CELL-013493,BTH-0106,Line_2,Night,ChemCorp,19.18,0.144,15.16,14.1,5003,94.47,Poor Retention,Poor Retention
+CELL-017078,BTH-0405,Line_1,Evening,VoltIndustries,26.43,0.127,14.79,16.1,4861,94.52,High Internal Resistance,High Internal Resistance
+CELL-001182,BTH-0214,Line_1,Morning,VoltIndustries,22.51,0.135,14.99,14.32,4977,95.16,,Poor Retention
+CELL-003207,BTH-0114,Line_1,Evening,ChemCorp,23.51,0.152,15.02,14.06,5040,97.19,,None
+CELL-010218,BTH-0492,Line_2,Evening,VoltIndustries,23.85,0.101,15.08,15.6,4861,94.2,High Internal Resistance,High Internal Resistance
+CELL-012769,BTH-0086,Line_3,Morning,ChemCorp,25.15,0.14,15.0,13.83,5120,96.8,,None
+CELL-001991,BTH-0103,Line_1,Night,VoltIndustries,22.2,0.13,14.93,13.87,5017,97.37,,None
+CELL-015368,BTH-0318,Line_1,Evening,ChemCorp,24.67,0.091,14.93,13.19,5018,96.41,Poor Retention,Poor Retention
+CELL-011249,BTH-0387,Line_1,Night,ChemCorp,22.25,0.149,14.84,14.02,5031,96.04,,None
+CELL-015425,BTH-0244,Line_2,Night,VoltIndustries,20.82,0.098,14.91,15.32,4975,97.32,High Internal Resistance,High Internal Resistance
+CELL-019502,BTH-0159,Line_3,Morning,LithioMat,26.48,0.174,14.72,15.18,4941,96.08,High Internal Resistance,High Internal Resistance
+CELL-016038,BTH-0288,Line_1,Evening,ChemCorp,24.77,0.156,15.15,14.38,5018,97.26,,None
+CELL-000688,BTH-0340,Line_3,Morning,ChemCorp,25.64,0.116,14.71,16.53,4778,93.59,Critical Resistance,Critical Resistance
+CELL-011694,BTH-0278,Line_2,Morning,LithioMat,24.32,0.129,14.98,13.01,4989,97.66,,None
+CELL-018214,BTH-0218,Line_1,Evening,LithioMat,23.6,0.11,14.92,15.07,4994,97.29,High Internal Resistance,High Internal Resistance
+CELL-016262,BTH-0108,Line_2,Evening,VoltIndustries,26.58,0.134,14.69,16.04,4819,93.72,High Internal Resistance,High Internal Resistance
+CELL-008759,BTH-0390,Line_2,Night,VoltIndustries,20.49,0.117,14.98,15.23,5022,97.51,High Internal Resistance,High Internal Resistance
+CELL-008229,BTH-0046,Line_1,Morning,VoltIndustries,24.24,0.164,15.01,15.05,5009,98.03,High Internal Resistance,High Internal Resistance
+CELL-008107,BTH-0344,Line_1,Morning,VoltIndustries,24.08,0.129,14.94,15.11,5001,95.96,High Internal Resistance,High Internal Resistance
+CELL-006633,BTH-0459,Line_3,Evening,ChemCorp,22.99,0.125,15.0,14.29,4957,97.37,,None
+CELL-009655,BTH-0301,Line_1,Morning,ChemCorp,25.07,0.172,15.02,13.29,4993,95.78,,None
+CELL-002600,BTH-0391,Line_1,Evening,VoltIndustries,25.58,0.093,14.55,16.95,4717,93.03,Critical Resistance,Critical Resistance
+CELL-018054,BTH-0259,Line_1,Morning,ChemCorp,23.97,0.104,14.79,16.95,4693,91.88,Critical Resistance,Critical Resistance
+CELL-011756,BTH-0090,Line_2,Evening,LithioMat,22.98,0.089,14.91,13.83,5037,97.57,Poor Retention,Poor Retention
+CELL-008873,BTH-0009,Line_2,Morning,VoltIndustries,21.65,0.149,14.98,15.46,4847,97.06,High Internal Resistance,High Internal Resistance
+CELL-014240,BTH-0271,Line_1,Night,ChemCorp,21.9,0.126,15.15,13.28,4999,95.91,,Poor Retention
+CELL-017754,BTH-0434,Line_1,Night,VoltIndustries,20.09,0.123,14.78,15.98,4849,95.53,High Internal Resistance,High Internal Resistance
+CELL-008063,BTH-0379,Line_1,Morning,LithioMat,26.54,0.144,14.86,14.2,4964,97.57,,None
+CELL-018287,BTH-0115,Line_1,Morning,ChemCorp,25.88,0.132,15.01,13.63,4981,97.17,,None
+CELL-007537,BTH-0136,Line_1,Morning,ChemCorp,25.38,0.142,15.0,14.05,5011,97.29,,None
+CELL-001770,BTH-0226,Line_1,Morning,LithioMat,22.47,0.123,14.79,15.81,4852,93.34,High Internal Resistance,High Internal Resistance
+CELL-002596,BTH-0438,Line_1,Morning,LithioMat,26.0,0.123,14.69,15.41,4975,97.45,High Internal Resistance,High Internal Resistance
+CELL-010128,BTH-0281,Line_1,Morning,VoltIndustries,25.91,0.154,14.92,14.34,5029,96.85,,None
+CELL-010365,BTH-0227,Line_1,Morning,ChemCorp,24.72,0.165,15.04,13.37,4972,94.77,Poor Retention,None
+CELL-012689,BTH-0034,Line_3,Evening,VoltIndustries,26.22,0.138,14.78,16.6,4805,95.03,Critical Resistance,Critical Resistance
+CELL-006389,BTH-0048,Line_1,Evening,LithioMat,24.37,0.164,15.05,14.23,4960,96.15,,None
+CELL-011773,BTH-0401,Line_2,Night,LithioMat,21.39,0.11,14.97,14.01,5030,97.13,,Poor Retention
+CELL-009825,BTH-0469,Line_3,Evening,VoltIndustries,26.78,0.135,14.75,17.05,4680,92.59,Critical Resistance,Critical Resistance
+CELL-014590,BTH-0408,Line_3,Night,VoltIndustries,21.92,0.133,14.76,16.91,4692,94.07,Critical Resistance,Critical Resistance
+CELL-010452,BTH-0209,Line_2,Morning,VoltIndustries,25.64,0.126,14.84,14.97,4989,96.89,,None
+CELL-003403,BTH-0013,Line_1,Evening,VoltIndustries,22.99,0.169,15.05,15.45,4926,96.01,High Internal Resistance,High Internal Resistance
+CELL-004258,BTH-0219,Line_1,Night,ChemCorp,20.07,0.138,14.94,14.19,5021,97.62,,None
+CELL-004063,BTH-0307,Line_3,Morning,ChemCorp,19.13,0.14,15.01,14.18,5025,97.68,,None
+CELL-003907,BTH-0084,Line_1,Evening,VoltIndustries,25.94,0.145,14.48,16.98,4716,95.88,Critical Resistance,Critical Resistance
+CELL-019088,BTH-0322,Line_2,Evening,VoltIndustries,24.64,0.137,14.99,13.96,4956,97.26,,None
+CELL-012885,BTH-0253,Line_2,Morning,ChemCorp,22.28,0.116,15.01,14.23,4983,97.97,,None
+CELL-003628,BTH-0258,Line_1,Evening,VoltIndustries,23.69,0.141,14.9,15.83,4830,94.27,High Internal Resistance,High Internal Resistance
+CELL-016414,BTH-0379,Line_3,Evening,ChemCorp,24.62,0.159,14.94,14.29,5003,97.82,,None
+CELL-013273,BTH-0265,Line_3,Night,VoltIndustries,23.89,0.124,14.98,15.69,4950,95.55,High Internal Resistance,High Internal Resistance
+CELL-015489,BTH-0154,Line_2,Morning,ChemCorp,23.08,0.142,15.01,14.43,5032,97.01,,None
+CELL-000211,BTH-0243,Line_1,Evening,LithioMat,23.93,0.137,14.77,15.1,4947,97.92,High Internal Resistance,High Internal Resistance
+CELL-018300,BTH-0138,Line_2,Morning,ChemCorp,25.54,0.147,15.01,13.23,5048,96.64,,None
+CELL-004106,BTH-0176,Line_3,Evening,LithioMat,27.01,0.145,14.72,15.99,4865,93.61,High Internal Resistance,High Internal Resistance
+CELL-019109,BTH-0462,Line_1,Night,VoltIndustries,22.27,0.069,14.97,14.87,5019,96.92,Poor Retention,Poor Retention
+CELL-006812,BTH-0264,Line_1,Evening,LithioMat,25.71,0.169,14.69,16.62,4815,94.38,Critical Resistance,Critical Resistance
+CELL-015303,BTH-0234,Line_3,Night,VoltIndustries,21.95,0.086,14.95,14.16,5035,97.74,Poor Retention,Poor Retention
+CELL-018130,BTH-0149,Line_1,Night,ChemCorp,21.22,0.122,14.96,13.51,4975,96.78,,None
+CELL-005627,BTH-0181,Line_1,Evening,LithioMat,23.76,0.097,15.15,14.25,4969,97.69,Poor Retention,Poor Retention
+CELL-008173,BTH-0299,Line_3,Evening,VoltIndustries,25.94,0.132,14.84,14.72,4959,96.26,,None
+CELL-017129,BTH-0160,Line_1,Morning,ChemCorp,26.13,0.19,14.7,15.07,4948,97.24,High Internal Resistance,High Internal Resistance
+CELL-001105,BTH-0106,Line_1,Night,ChemCorp,17.91,0.143,15.04,13.98,5017,97.06,,None
+CELL-009521,BTH-0424,Line_3,Night,ChemCorp,22.7,0.081,14.82,13.59,4944,97.23,Poor Retention,Poor Retention
+CELL-012413,BTH-0109,Line_2,Night,ChemCorp,21.58,0.132,14.98,14.36,5072,97.65,,None
+CELL-007215,BTH-0188,Line_3,Morning,ChemCorp,24.52,0.15,14.84,14.29,5055,96.55,,None
+CELL-014416,BTH-0095,Line_3,Morning,ChemCorp,25.37,0.163,15.07,14.64,4961,94.97,Poor Retention,None
+CELL-015030,BTH-0070,Line_2,Evening,VoltIndustries,21.45,0.165,15.14,14.77,5015,96.53,,None
+CELL-002677,BTH-0145,Line_1,Evening,VoltIndustries,23.36,0.104,14.87,14.32,5011,97.32,,Poor Retention
+CELL-006521,BTH-0396,Line_3,Evening,VoltIndustries,24.55,0.093,14.79,16.96,4708,94.4,Critical Resistance,Critical Resistance
+CELL-010286,BTH-0475,Line_1,Evening,ChemCorp,24.84,0.162,15.04,14.49,5025,96.61,,None
+CELL-003843,BTH-0349,Line_1,Night,ChemCorp,19.68,0.121,15.01,15.26,4924,95.95,High Internal Resistance,High Internal Resistance
+CELL-015232,BTH-0107,Line_2,Morning,ChemCorp,23.42,0.178,15.06,12.73,4969,97.76,,None
+CELL-010524,BTH-0194,Line_2,Evening,VoltIndustries,25.81,0.138,14.75,16.91,4722,94.21,Critical Resistance,Critical Resistance
+CELL-015832,BTH-0204,Line_2,Evening,VoltIndustries,23.3,0.135,15.05,15.02,5026,96.58,High Internal Resistance,High Internal Resistance
+CELL-011916,BTH-0447,Line_2,Evening,ChemCorp,22.87,0.109,15.0,14.76,4929,94.6,Poor Retention,Poor Retention
+CELL-007068,BTH-0174,Line_3,Night,LithioMat,20.63,0.176,15.11,13.6,4949,97.79,,None
+CELL-016744,BTH-0443,Line_3,Night,ChemCorp,21.04,0.133,15.09,14.21,5004,95.07,,Poor Retention
+CELL-012905,BTH-0052,Line_1,Night,VoltIndustries,22.26,0.152,14.83,15.33,4933,98.29,High Internal Resistance,High Internal Resistance
+CELL-002994,BTH-0445,Line_3,Night,ChemCorp,19.84,0.119,15.06,14.54,5009,96.97,,None
+CELL-006404,BTH-0049,Line_3,Morning,LithioMat,23.73,0.137,14.99,14.27,4971,94.89,Poor Retention,Poor Retention
+CELL-017300,BTH-0334,Line_2,Night,ChemCorp,21.54,0.159,14.85,14.88,4967,97.27,,None
+CELL-012127,BTH-0230,Line_3,Night,VoltIndustries,21.83,0.122,15.02,15.35,4939,96.6,High Internal Resistance,High Internal Resistance
+CELL-011089,BTH-0482,Line_1,Evening,VoltIndustries,26.68,0.112,14.76,16.54,4790,91.78,Critical Resistance,Critical Resistance
+CELL-000816,BTH-0398,Line_2,Night,VoltIndustries,19.54,0.116,14.94,13.94,4980,97.24,,None
+CELL-015878,BTH-0179,Line_1,Evening,VoltIndustries,22.26,0.156,14.99,15.37,4976,97.53,High Internal Resistance,High Internal Resistance
+CELL-017341,BTH-0441,Line_3,Morning,VoltIndustries,21.59,0.085,15.07,14.72,5024,96.88,Poor Retention,Poor Retention
+CELL-004213,BTH-0483,Line_2,Evening,VoltIndustries,23.93,0.156,14.79,17.03,4692,91.7,Critical Resistance,Critical Resistance
+CELL-015798,BTH-0465,Line_2,Evening,LithioMat,23.86,0.154,15.29,13.74,5037,98.05,,None
+CELL-003062,BTH-0293,Line_2,Morning,LithioMat,24.42,0.151,14.95,14.44,5010,96.9,,None
+CELL-008501,BTH-0294,Line_3,Morning,VoltIndustries,23.12,0.119,14.77,16.86,4753,94.79,Critical Resistance,Critical Resistance
+CELL-014918,BTH-0379,Line_1,Evening,VoltIndustries,26.19,0.136,14.8,17.18,4686,93.4,Critical Resistance,Critical Resistance
+CELL-010927,BTH-0217,Line_3,Night,LithioMat,20.55,0.156,14.99,14.14,4972,96.76,,None
+CELL-018243,BTH-0250,Line_3,Morning,VoltIndustries,26.08,0.119,14.67,16.93,4683,93.52,Critical Resistance,Critical Resistance
+CELL-017278,BTH-0381,Line_2,Night,LithioMat,23.67,0.089,14.93,13.9,5055,96.82,Poor Retention,Poor Retention
+CELL-016086,BTH-0056,Line_3,Evening,ChemCorp,23.85,0.194,15.03,13.62,5006,97.51,,None
+CELL-011815,BTH-0341,Line_3,Evening,LithioMat,22.21,0.131,15.03,13.29,4953,96.57,,None
+CELL-011715,BTH-0498,Line_1,Morning,VoltIndustries,26.34,0.137,14.59,16.14,4818,93.78,High Internal Resistance,High Internal Resistance
+CELL-014658,BTH-0481,Line_3,Evening,ChemCorp,24.6,0.124,14.94,13.77,5032,96.05,,Poor Retention
+CELL-011950,BTH-0331,Line_3,Morning,ChemCorp,25.63,0.141,14.78,16.75,4760,95.17,Critical Resistance,Critical Resistance
+CELL-001265,BTH-0083,Line_3,Morning,LithioMat,27.21,0.168,14.71,15.98,4841,94.18,High Internal Resistance,High Internal Resistance
+CELL-005057,BTH-0154,Line_1,Night,ChemCorp,20.73,0.16,15.11,14.26,5014,96.99,,None
+CELL-008270,BTH-0035,Line_2,Evening,ChemCorp,23.02,0.178,15.02,14.0,5064,97.32,,None
+CELL-008183,BTH-0268,Line_3,Night,LithioMat,21.27,0.152,15.06,13.74,5003,97.47,,None
+CELL-012575,BTH-0158,Line_1,Morning,ChemCorp,21.98,0.161,14.75,16.57,4745,95.17,Critical Resistance,Critical Resistance
+CELL-016525,BTH-0013,Line_2,Evening,ChemCorp,24.12,0.149,14.94,14.57,5004,97.8,,None
+CELL-010432,BTH-0216,Line_1,Night,ChemCorp,21.28,0.118,15.07,14.76,4995,96.85,,None
+CELL-017584,BTH-0219,Line_2,Morning,VoltIndustries,23.93,0.145,15.12,15.51,4948,93.61,High Internal Resistance,High Internal Resistance
+CELL-001001,BTH-0282,Line_1,Night,LithioMat,19.93,0.129,14.89,13.46,5027,97.06,,None
+CELL-001999,BTH-0301,Line_2,Night,VoltIndustries,26.59,0.097,14.72,16.4,4779,95.6,High Internal Resistance,High Internal Resistance
+CELL-015888,BTH-0059,Line_1,Night,ChemCorp,19.11,0.105,15.05,14.48,5016,97.3,Poor Retention,Poor Retention
+CELL-019049,BTH-0107,Line_1,Evening,VoltIndustries,23.14,0.167,15.01,14.37,5024,96.35,,None
+CELL-019523,BTH-0120,Line_2,Evening,VoltIndustries,25.76,0.131,14.64,16.94,4689,95.19,Critical Resistance,Critical Resistance
+CELL-014380,BTH-0061,Line_1,Night,ChemCorp,23.83,0.106,14.98,12.53,4976,96.92,Poor Retention,Poor Retention
+CELL-004865,BTH-0369,Line_2,Evening,VoltIndustries,24.4,0.128,15.02,15.04,4987,97.17,High Internal Resistance,High Internal Resistance
+CELL-013562,BTH-0206,Line_3,Evening,VoltIndustries,23.58,0.106,14.92,14.93,4962,96.63,,Poor Retention
+CELL-017920,BTH-0126,Line_3,Morning,LithioMat,22.78,0.128,14.95,13.57,4991,96.65,,None
+CELL-014014,BTH-0297,Line_2,Evening,VoltIndustries,26.57,0.146,14.79,16.74,4709,95.15,Critical Resistance,Critical Resistance
+CELL-004342,BTH-0183,Line_1,Morning,VoltIndustries,22.52,0.121,14.76,16.51,4755,94.33,Critical Resistance,Critical Resistance
+CELL-003530,BTH-0256,Line_3,Morning,LithioMat,22.28,0.153,15.09,13.53,5039,96.27,,None
+CELL-009074,BTH-0253,Line_2,Night,ChemCorp,22.45,0.111,15.14,13.96,5032,98.83,,None
+CELL-019750,BTH-0184,Line_1,Evening,VoltIndustries,23.05,0.133,14.9,15.56,4900,92.49,High Internal Resistance,High Internal Resistance
+CELL-000060,BTH-0021,Line_1,Morning,LithioMat,23.73,0.101,14.88,13.91,4963,95.1,Poor Retention,Poor Retention
+CELL-016357,BTH-0168,Line_2,Evening,ChemCorp,25.74,0.166,14.83,13.49,4973,96.3,,None
+CELL-003548,BTH-0190,Line_3,Evening,VoltIndustries,21.13,0.093,14.97,14.26,4985,97.81,Poor Retention,Poor Retention
+CELL-013598,BTH-0313,Line_2,Morning,ChemCorp,25.95,0.159,14.74,15.79,4909,95.2,High Internal Resistance,High Internal Resistance
+CELL-015556,BTH-0349,Line_1,Night,ChemCorp,22.44,0.118,14.98,13.89,4985,96.75,,None
+CELL-010957,BTH-0285,Line_1,Night,ChemCorp,20.69,0.089,15.24,14.34,5006,97.75,Poor Retention,Poor Retention
+CELL-013330,BTH-0445,Line_3,Morning,VoltIndustries,24.65,0.16,15.12,14.39,5005,95.87,,None
+CELL-001323,BTH-0335,Line_2,Morning,VoltIndustries,25.67,0.143,14.69,17.22,4670,94.42,Critical Resistance,Critical Resistance
+CELL-019865,BTH-0361,Line_2,Evening,ChemCorp,25.07,0.112,14.75,15.5,4981,97.83,High Internal Resistance,High Internal Resistance
+CELL-009131,BTH-0392,Line_1,Night,LithioMat,19.89,0.083,15.06,14.19,5023,98.25,Poor Retention,Poor Retention
+CELL-018072,BTH-0391,Line_2,Evening,ChemCorp,23.66,0.133,15.06,13.07,4986,96.68,,None
+CELL-019273,BTH-0087,Line_1,Evening,ChemCorp,22.99,0.156,15.05,13.2,4973,98.17,,None
+CELL-001371,BTH-0273,Line_2,Morning,ChemCorp,23.46,0.12,14.92,14.61,5057,97.63,,None
+CELL-004283,BTH-0150,Line_2,Morning,ChemCorp,24.2,0.176,15.1,14.48,5042,96.53,,None
+CELL-019263,BTH-0296,Line_1,Night,ChemCorp,20.42,0.087,14.96,13.83,4961,96.75,Poor Retention,Poor Retention
+CELL-010742,BTH-0072,Line_1,Evening,VoltIndustries,23.42,0.12,15.01,15.16,4975,96.81,High Internal Resistance,High Internal Resistance
+CELL-017560,BTH-0083,Line_3,Night,VoltIndustries,21.51,0.1,15.05,14.82,4978,95.97,Poor Retention,Poor Retention
+CELL-016576,BTH-0337,Line_3,Night,VoltIndustries,22.41,0.129,14.72,17.13,4647,93.33,Critical Resistance,Critical Resistance
+CELL-003113,BTH-0070,Line_2,Night,ChemCorp,23.98,0.124,14.95,14.56,4982,97.05,,None
+CELL-005572,BTH-0403,Line_1,Morning,VoltIndustries,22.92,0.139,15.05,15.42,4949,97.13,High Internal Resistance,High Internal Resistance
+CELL-016476,BTH-0088,Line_1,Evening,LithioMat,26.53,0.14,14.66,15.66,4862,94.31,High Internal Resistance,High Internal Resistance
+CELL-008167,BTH-0298,Line_3,Evening,LithioMat,22.52,0.106,15.05,13.95,5080,98.03,,None
+CELL-007711,BTH-0487,Line_1,Evening,ChemCorp,23.88,0.126,15.05,13.35,4945,96.95,,None
+CELL-008247,BTH-0366,Line_1,Night,LithioMat,21.95,0.134,14.74,15.34,4933,97.15,High Internal Resistance,High Internal Resistance
+CELL-012926,BTH-0299,Line_3,Morning,VoltIndustries,22.5,0.154,14.77,16.91,4756,93.12,Critical Resistance,Critical Resistance
+CELL-014727,BTH-0355,Line_2,Evening,ChemCorp,26.37,0.128,14.61,16.61,4724,94.59,Critical Resistance,Critical Resistance
+CELL-003584,BTH-0414,Line_3,Evening,ChemCorp,23.79,0.165,15.03,13.81,5020,94.78,Poor Retention,None
+CELL-000179,BTH-0255,Line_1,Night,ChemCorp,23.55,0.154,15.07,14.74,4986,96.43,,None
+CELL-019934,BTH-0285,Line_1,Night,LithioMat,22.85,0.148,15.16,14.96,4981,97.93,,None
+CELL-015717,BTH-0290,Line_1,Evening,VoltIndustries,25.78,0.157,14.75,16.74,4739,92.22,Critical Resistance,Critical Resistance
+CELL-011072,BTH-0400,Line_3,Night,VoltIndustries,21.59,0.126,14.9,15.58,4956,93.78,High Internal Resistance,High Internal Resistance
+CELL-001277,BTH-0365,Line_1,Morning,LithioMat,24.69,0.135,15.01,13.86,4953,97.33,,None
+CELL-018475,BTH-0263,Line_3,Night,VoltIndustries,20.19,0.132,15.0,14.67,5018,97.72,,None
+CELL-003390,BTH-0219,Line_2,Night,LithioMat,20.88,0.122,14.9,14.46,5010,95.9,,Poor Retention
+CELL-017705,BTH-0461,Line_3,Evening,ChemCorp,23.54,0.122,14.96,14.62,4962,97.13,,None
+CELL-015256,BTH-0114,Line_1,Morning,LithioMat,26.21,0.125,14.72,15.73,4908,94.66,High Internal Resistance,High Internal Resistance
+CELL-002151,BTH-0269,Line_1,Morning,VoltIndustries,22.98,0.147,15.08,14.5,4969,94.86,Poor Retention,None
+CELL-007940,BTH-0208,Line_1,Night,VoltIndustries,20.02,0.152,15.01,15.46,4979,98.13,High Internal Resistance,High Internal Resistance
+CELL-006296,BTH-0019,Line_3,Evening,VoltIndustries,23.71,0.102,14.93,14.59,5008,95.9,Poor Retention,Poor Retention
+CELL-014932,BTH-0213,Line_1,Night,ChemCorp,22.11,0.125,15.08,13.83,5034,98.12,,None
+CELL-003125,BTH-0160,Line_1,Evening,ChemCorp,24.71,0.089,15.07,13.64,4993,97.22,Poor Retention,Poor Retention
+CELL-005260,BTH-0153,Line_3,Evening,LithioMat,24.93,0.089,15.0,14.1,5027,98.03,Poor Retention,Poor Retention
+CELL-005963,BTH-0073,Line_2,Night,LithioMat,20.71,0.113,14.78,15.09,5019,96.25,High Internal Resistance,High Internal Resistance
+CELL-003512,BTH-0051,Line_1,Morning,VoltIndustries,27.2,0.165,14.78,16.69,4775,93.21,Critical Resistance,Critical Resistance
+CELL-018379,BTH-0496,Line_1,Evening,ChemCorp,22.46,0.122,14.84,13.52,5035,94.54,Poor Retention,Poor Retention
+CELL-016871,BTH-0266,Line_1,Morning,ChemCorp,24.64,0.119,15.22,14.23,5015,96.23,,Poor Retention
+CELL-012221,BTH-0353,Line_2,Evening,ChemCorp,23.64,0.129,14.95,14.06,5018,96.98,,None
+CELL-009172,BTH-0016,Line_2,Evening,ChemCorp,24.48,0.135,14.88,13.51,4996,96.62,,None
+CELL-016444,BTH-0045,Line_1,Morning,ChemCorp,21.56,0.102,14.97,13.47,4979,97.22,Poor Retention,Poor Retention
+CELL-002364,BTH-0459,Line_2,Morning,VoltIndustries,23.37,0.148,14.92,14.0,5048,97.89,,None
+CELL-013494,BTH-0333,Line_1,Morning,LithioMat,24.8,0.126,15.14,13.93,4999,95.3,,Poor Retention
+CELL-012591,BTH-0471,Line_2,Morning,VoltIndustries,23.69,0.133,14.79,16.62,4746,92.07,Critical Resistance,Critical Resistance
+CELL-012674,BTH-0396,Line_3,Morning,ChemCorp,24.25,0.078,15.01,13.69,5004,97.46,Poor Retention,Poor Retention
+CELL-002816,BTH-0136,Line_1,Night,ChemCorp,23.02,0.149,15.06,13.35,5045,97.36,,None
+CELL-004215,BTH-0248,Line_2,Evening,LithioMat,22.64,0.125,15.01,14.71,4976,96.21,,Poor Retention
+CELL-004024,BTH-0214,Line_1,Evening,LithioMat,23.96,0.112,14.85,13.96,4988,98.38,,None
+CELL-009527,BTH-0229,Line_1,Night,LithioMat,21.58,0.14,14.92,15.18,4983,96.85,High Internal Resistance,High Internal Resistance
+CELL-018616,BTH-0019,Line_2,Morning,VoltIndustries,23.98,0.147,14.94,15.67,4912,93.61,High Internal Resistance,High Internal Resistance
+CELL-007939,BTH-0246,Line_2,Morning,LithioMat,22.34,0.161,15.03,12.99,4997,96.96,,None
+CELL-006767,BTH-0026,Line_1,Evening,VoltIndustries,24.65,0.152,14.9,15.2,4937,96.67,High Internal Resistance,High Internal Resistance
+CELL-017903,BTH-0318,Line_1,Evening,ChemCorp,25.72,0.138,14.64,15.17,5013,97.6,High Internal Resistance,High Internal Resistance
+CELL-009389,BTH-0485,Line_2,Night,ChemCorp,22.73,0.115,15.01,14.08,4981,97.32,,None
+CELL-002231,BTH-0045,Line_2,Evening,VoltIndustries,23.15,0.172,15.01,14.62,5013,96.79,,None
+CELL-019423,BTH-0117,Line_2,Morning,VoltIndustries,22.96,0.138,14.7,16.93,4700,94.81,Critical Resistance,Critical Resistance
+CELL-014542,BTH-0497,Line_3,Night,VoltIndustries,21.37,0.123,15.08,13.93,4962,96.19,,Poor Retention
+CELL-015351,BTH-0026,Line_1,Evening,VoltIndustries,22.29,0.133,14.98,15.58,4943,91.6,High Internal Resistance,High Internal Resistance
+CELL-005677,BTH-0435,Line_1,Morning,VoltIndustries,24.1,0.133,15.04,15.19,4985,95.91,High Internal Resistance,High Internal Resistance
+CELL-001661,BTH-0019,Line_1,Evening,VoltIndustries,25.6,0.134,14.59,17.53,4595,93.8,Critical Resistance,Critical Resistance
+CELL-008157,BTH-0476,Line_3,Morning,VoltIndustries,23.45,0.114,14.86,15.03,4991,96.94,High Internal Resistance,High Internal Resistance
+CELL-012584,BTH-0219,Line_1,Evening,LithioMat,23.21,0.138,15.14,13.61,4967,97.62,,None
+CELL-010855,BTH-0281,Line_1,Evening,VoltIndustries,22.99,0.157,15.1,15.19,4912,97.35,High Internal Resistance,High Internal Resistance
