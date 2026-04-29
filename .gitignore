@@ -6,8 +6,9 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
-# Models / outputs
+# Models / outputs / training logs
 models/
+runs/
 *.npz
 *.pkl
 *.joblib
