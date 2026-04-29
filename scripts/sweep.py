@@ -29,6 +29,11 @@ from src.svm import (  # noqa: E402
 )
 
 
+def _print(*args, **kwargs) -> None:
+    kwargs.setdefault("flush", True)
+    print(*args, **kwargs)
+
+
 def macro_f1(y_true: np.ndarray, y_pred: np.ndarray, n_classes: int) -> float:
     f1s = []
     for c in range(n_classes):
@@ -71,7 +76,7 @@ def evaluate(model, X_tr, y_tr, X_va, y_va, n_classes: int, label: str) -> dict:
     val_acc = float((pred_va == y_va).mean())
     train_f1 = macro_f1(y_tr, pred_tr, n_classes)
     val_f1 = macro_f1(y_va, pred_va, n_classes)
-    print(
+    _print(
         f"  {label:48s} fit={fit_s:5.1f}s  "
         f"train_acc={train_acc:.4f}  val_acc={val_acc:.4f}  "
         f"train_f1={train_f1:.4f}  val_f1={val_f1:.4f}"
@@ -106,25 +111,25 @@ def main() -> None:
     X_tr, y_tr = stratified_subsample(X_tr_full, y_tr_full, args.train_cap, args.seed)
     K = len(enc.classes_)
 
-    print(f"sweep: train(sample)={len(X_tr)}, val={len(X_va)}, classes={K}")
-    print(f"classes: {enc.classes_.tolist()}")
-    print(f"val class counts: {np.unique(y_va, return_counts=True)[1].tolist()}")
-    print()
+    _print(f"sweep: train(sample)={len(X_tr)}, val={len(X_va)}, classes={K}")
+    _print(f"classes: {enc.classes_.tolist()}")
+    _print(f"val class counts: {np.unique(y_va, return_counts=True)[1].tolist()}")
+    _print()
 
     results: list[dict] = []
 
-    print("[linear hard-margin]")
+    _print("[linear hard-margin]")
     m = MultiClassOvR(lambda: LinearHardMarginSVM(), class_weight="balanced")
     results.append(evaluate(m, X_tr, y_tr, X_va, y_va, K, "linear-hard balanced"))
     m = MultiClassOvR(lambda: LinearHardMarginSVM(), class_weight=None)
     results.append(evaluate(m, X_tr, y_tr, X_va, y_va, K, "linear-hard no-weight"))
 
-    print("\n[soft-margin: C sweep]")
+    _print("\n[soft-margin: C sweep]")
     for C in [0.01, 0.1, 1.0, 10.0, 100.0]:
         m = MultiClassOvR(lambda C=C: SoftMarginSVM(C=C), class_weight="balanced")
         results.append(evaluate(m, X_tr, y_tr, X_va, y_va, K, f"soft C={C}"))
 
-    print("\n[kernel RBF: C × gamma sweep]")
+    _print("\n[kernel RBF: C × gamma sweep]")
     for C in [0.1, 1.0, 10.0, 100.0]:
         for gamma in ["scale", "auto", 0.05, 0.5, 5.0]:
             label = f"rbf C={C} gamma={gamma}"
@@ -134,7 +139,7 @@ def main() -> None:
             )
             results.append(evaluate(m, X_tr, y_tr, X_va, y_va, K, label))
 
-    print("\n[kernel poly: C × degree sweep]")
+    _print("\n[kernel poly: C × degree sweep]")
     for C in [1.0, 10.0]:
         for d in [2, 3, 4]:
             label = f"poly C={C} degree={d}"
@@ -146,16 +151,16 @@ def main() -> None:
             )
             results.append(evaluate(m, X_tr, y_tr, X_va, y_va, K, label))
 
-    print("\n=== top 10 by val macro-F1 ===")
+    _print("\n=== top 10 by val macro-F1 ===")
     results.sort(key=lambda r: r["val_macro_f1"], reverse=True)
     for r in results[:10]:
-        print(
+        _print(
             f"  {r['label']:48s} "
             f"val_f1={r['val_macro_f1']:.4f}  val_acc={r['val_acc']:.4f}  "
             f"fit={r['fit_seconds']:.1f}s"
         )
 
-    print("\n=== best per variant (by val macro-F1) ===")
+    _print("\n=== best per variant (by val macro-F1) ===")
     for prefix in ["linear-hard", "soft", "rbf", "poly"]:
         best = max(
             (r for r in results if r["label"].startswith(prefix)),
@@ -163,7 +168,7 @@ def main() -> None:
             default=None,
         )
         if best:
-            print(
+            _print(
                 f"  {prefix:12s} -> {best['label']}  "
                 f"val_f1={best['val_macro_f1']:.4f}  val_acc={best['val_acc']:.4f}"
             )

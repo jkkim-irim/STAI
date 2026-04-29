@@ -315,13 +315,16 @@ class MultiClassOvR:
         state["base_factory"] = None
         return state
 
-    def fit(self, X: np.ndarray, y: np.ndarray) -> "MultiClassOvR":
+    def fit(
+        self, X: np.ndarray, y: np.ndarray, verbose: bool = False
+    ) -> "MultiClassOvR":
         X = np.asarray(X, dtype=np.float64)
         y = np.asarray(y).reshape(-1)
         self.classes_ = np.unique(y)
         self.estimators_ = []
         n = len(y)
-        for c in self.classes_:
+        import time as _time
+        for k, c in enumerate(self.classes_):
             y_bin = np.where(y == c, 1.0, -1.0)
             if self.class_weight == "balanced":
                 n_pos = int((y_bin == 1).sum())
@@ -330,7 +333,19 @@ class MultiClassOvR:
             else:
                 w = None
             est = self.base_factory()
+            t0 = _time.time()
+            if verbose:
+                print(
+                    f"    OvR [{k + 1}/{len(self.classes_)}] fitting class={c} "
+                    f"(n_pos={int((y_bin == 1).sum())}, n_neg={int((y_bin == -1).sum())})...",
+                    flush=True,
+                )
             est.fit(X, y_bin, sample_weight=w)
+            if verbose:
+                print(
+                    f"      done in {_time.time() - t0:.1f}s, #SV={len(est.alpha_)}",
+                    flush=True,
+                )
             self.estimators_.append(est)
         return self
 

@@ -32,6 +32,11 @@ from src.svm import (  # noqa: E402
 )
 
 
+def print_flush(*args, **kwargs) -> None:
+    kwargs.setdefault("flush", True)
+    print(*args, **kwargs)
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--data", required=True, help="path to training CSV")
@@ -107,7 +112,7 @@ def stratified_subsample(
 def per_class_report(
     y_true: np.ndarray, y_pred: np.ndarray, classes: np.ndarray, prefix: str = ""
 ) -> None:
-    print(f"{prefix}per-class metrics:")
+    print_flush(f"{prefix}per-class metrics:")
     for ci, c in enumerate(classes):
         mask = y_true == ci
         if mask.sum() == 0:
@@ -117,7 +122,7 @@ def per_class_report(
         precision = (
             (y_true[pred_mask] == ci).mean() if pred_mask.sum() > 0 else 0.0
         )
-        print(
+        print_flush(
             f"{prefix}  {c:30s}  n={int(mask.sum()):5d}  "
             f"recall={recall:.4f}  precision={precision:.4f}"
         )
@@ -131,10 +136,10 @@ def confusion_matrix(
     for t, p in zip(y_true, y_pred):
         cm[int(t), int(p)] += 1
     short = [c[:10] for c in classes]
-    print(f"{prefix}confusion (rows=true, cols=pred):")
-    print(f"{prefix}  {'':22s}" + "".join(f"{s:>11s}" for s in short))
+    print_flush(f"{prefix}confusion (rows=true, cols=pred):")
+    print_flush(f"{prefix}  {'':22s}" + "".join(f"{s:>11s}" for s in short))
     for i, c in enumerate(classes):
-        print(
+        print_flush(
             f"{prefix}  {c[:20]:22s}"
             + "".join(f"{cm[i, j]:11d}" for j in range(K))
         )
@@ -142,15 +147,15 @@ def confusion_matrix(
 
 def main() -> None:
     args = parse_args()
-    print(f"[stai-train] variant={args.variant}")
-    print(f"             args={vars(args)}")
+    print_flush(f"[stai-train] variant={args.variant}")
+    print_flush(f"             args={vars(args)}")
 
     X_raw, y_str, _ = load_csv(args.data)
-    print(f"  loaded {X_raw.shape[0]} rows × {X_raw.shape[1]} features")
+    print_flush(f"  loaded {X_raw.shape[0]} rows × {X_raw.shape[1]} features")
 
     encoder = LabelEncoder().fit(y_str)
     y_int = encoder.transform(y_str)
-    print(f"  classes ({len(encoder.classes_)}): {encoder.classes_.tolist()}")
+    print_flush(f"  classes ({len(encoder.classes_)}): {encoder.classes_.tolist()}")
 
     scaler = StandardScaler().fit(X_raw)
     Xs = scaler.transform(X_raw)
@@ -158,32 +163,32 @@ def main() -> None:
     X_tr, y_tr, X_va, y_va = train_val_split(
         Xs, y_int, val_ratio=args.val_ratio, seed=args.seed
     )
-    print(f"  split: train={len(X_tr)}, val={len(X_va)}")
+    print_flush(f"  split: train={len(X_tr)}, val={len(X_va)}")
 
     if args.max_train_samples and args.max_train_samples < len(X_tr):
         X_tr, y_tr = stratified_subsample(X_tr, y_tr, args.max_train_samples, args.seed)
-        print(f"  subsampled train to {len(X_tr)} (stratified)")
+        print_flush(f"  subsampled train to {len(X_tr)} (stratified)")
 
     cw = args.class_weight if args.class_weight != "none" else None
     factory = make_factory(args.variant, args)
     ovr = MultiClassOvR(base_factory=factory, class_weight=cw)
 
     t0 = time.time()
-    ovr.fit(X_tr, y_tr)
+    ovr.fit(X_tr, y_tr, verbose=True)
     fit_seconds = time.time() - t0
-    print(f"  fit done in {fit_seconds:.1f}s")
+    print_flush(f"  fit done in {fit_seconds:.1f}s")
 
     pred_tr = ovr.predict(X_tr)
     pred_va = ovr.predict(X_va)
     train_acc = (pred_tr == y_tr).mean()
     val_acc = (pred_va == y_va).mean()
 
-    print()
-    print(f"  train acc: {train_acc:.4f}")
-    print(f"  val   acc: {val_acc:.4f}")
-    print()
+    print_flush()
+    print_flush(f"  train acc: {train_acc:.4f}")
+    print_flush(f"  val   acc: {val_acc:.4f}")
+    print_flush()
     per_class_report(y_va, pred_va, encoder.classes_, prefix="  [val] ")
-    print()
+    print_flush()
     confusion_matrix(y_va, pred_va, encoder.classes_, prefix="  [val] ")
 
     out_path = Path(args.out)
@@ -205,7 +210,7 @@ def main() -> None:
     }
     with open(out_path, "wb") as f:
         pickle.dump(state, f)
-    print(f"\n  model saved to {out_path}")
+    print_flush(f"\n  model saved to {out_path}")
 
 
 if __name__ == "__main__":
